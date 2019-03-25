@@ -4,7 +4,6 @@ const config = require("./config.json");
 
 client.on("ready", () => {
   console.log(`SelfBot was made by @DevilsExploits#0970`); 
-  console.log(`Channels cleaned by Denied720#3939 - in ɢʀᴜᴍᴘ.ᴠɪᴘ 💣 ID:554085158794297364`); 
   client.user.setPresence({
         game: {
             name: 'with depression',
