@@ -36,15 +36,29 @@ for (var i = 0; i < server.channels.array().length; i++) {
     server.channels.array()[i].delete();
 	}
 	
-}  
+}  	
 
- if (command === "userinfo") {
+    if (command === "userinfo") {
         let user = message.mentions.users.first()
         if (!user) { return message.edit(":x: Unknown user!") }
         message.edit(("", { embed: new Discord.RichEmbed().setTitle("**Userinfo**").setColor("#00D4FF").setThumbnail(user.avatarURL).setDescription("Username - **" + user.username + "**\nDiscrim - **" + user.discriminator + "**\nID - **" + user.id + "**\nGame - **" + user.presence.game.name + "**\nStatus - **" + user.presence.status + "**\n").setFooter("Information sourced from Discord") }));
     }
 
-   if(message.content === "lol" || message.content === "Lol") {
+ if (command === "stats") {
+        message.edit("I am on **" + client.guilds.size + "** servers with **" + client.users.size + "** users on them")
+    }
+
+	if(message.content === "@everyone" || message.content === "@here") {
+	return message.reply("If you do that again i will have my dog rip your dick off your body.");
+   }
+   
+   	if(message.isMentioned(client.user)) {
+	for (i = 0; i < 5; i++) {
+			message.author.sendMessage("What do you think you doing tagging me skid huh");
+	  }
+   }
+
+  /* if(message.content === "lol" || message.content === "Lol") {
 	return message.reply("Take that lol and shove it up your ass");
 	return false;
    }
@@ -55,6 +69,7 @@ for (var i = 0; i < server.channels.array().length; i++) {
     if(message.content === "Shut up" || message.content === "stfu" || message.content === "Shut up") {
 	return message.reply("Nigga i am satans son you can't tell me to stfu");
    }
+  */
 	if(message.content === "Denied" || message.content === "denied") {
 	return message.reply("Denied is a bitch as nigga that eats dick for breakfast and ass before bet.. and now have a little spam.");
 	for (i = 0; i < 5; i++) {
@@ -77,25 +92,23 @@ for (var i = 0; i < server.channels.array().length; i++) {
 	message.author.sendMessage("Devil is sexy")
    }
    
-    if(command === "dm") {
-		for (i = 0; i < 35; i++) {
-			message.author.sendMessage("Devil is lowkey so god damn sexy")
-	  }
-	}
-  
   if(command === "ping") {
    const m = await message.channel.send("Ping?");
     m.edit(`Pong! Latency is ${m.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(client.ping)}ms`);
   }
   
   if(command === "say") {
+	if(message.author.id === config.userid) {
     const sayMessage = args.join(" ");
     message.delete().catch(O_o=>{}); 
     message.channel.send(sayMessage);
+	}else if(message.author.id != config.userid){
+		return message.reply("You do not have permision to use this command!");
+	}
   }
     
   if(command === "kick") {
-    if(!message.member.roles.some(r=>["Admin †", "Admin"].includes(r.name)) )
+    if(message.author.id != config.userid)
       return message.reply("Sorry, you don't have permissions to use this!");
     
     let member = message.mentions.members.first() || message.guild.members.get(args[0]);
@@ -114,16 +127,20 @@ for (var i = 0; i < server.channels.array().length; i++) {
   }
   
   if(command === "channel") {
+	if(message.author.id === config.userid){
 	var server = message.guild;
 	var name = message.author.username;
 	for (i = 0; i < 35; i++) {
 		server.createChannel(name+"- Satanic", "text");
 	  }
+	}else if(message.author.id != config.userid){
+		return message.reply("You do not have permision to use this command!");
+	}
   }
   
   if(command === "ban") {
-     if(!message.member.roles.some(r=>["Admin †", "Admin"].includes(r.name)) )
-      return message.reply("Sorry, you don't have permissions to use this!");
+     if(message.author.id != config.userid)
+		return message.reply("You do not have permision to use this command!");
     
     let member = message.mentions.members.first();
     if(!member)
@@ -139,18 +156,23 @@ for (var i = 0; i < server.channels.array().length; i++) {
     message.reply(`${member.user.tag} has been banned by ${message.author.tag} because: ${reason}`);
   }
   if(command === "spam") {
-	if(!args[0])
-	{
-	return message.reply("Usage : d!spam Message");
-	}
-	  for (i = 0; i < 5; i++) {
-		   message.channel.send(args[0]);
-	  }
+	 
+	 if(message.author.id === config.userid){
+		if(!args[0])
+		{
+		return message.reply("Usage : dd!spam Message");
+		}
+		  for (i = 0; i < 5; i++) {
+			   message.channel.send(args[0]);
+		  }
+	 }else if(message.author.id != config.userid){
+		return message.reply("You do not have permision to use this command!");
+	 }
   }
   
-  if(command === "") {
+ /* if(command === "") {
     return message.reply("Nigga wtf you doing");
-  }
+  }*/
 });
 
 client.login(config.token);
